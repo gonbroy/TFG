@@ -1,0 +1,70 @@
+# =========================
+# Python
+# =========================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Distribución / build
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# =========================
+# Variables de entorno
+# =========================
+
+.env
+.env.*
+
+# =========================
+# VS Code / IDEs
+# =========================
+
+.vscode/
+.idea/
+
+# =========================
+# Sistema operativo
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+# Node / Frontend (por si usas React)
+# =========================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Docker
+# =========================
+
+*.tar
+
+# =========================
+# Testing / coverage
+# =========================
+
+.coverage
+htmlcov/
+.pytest_cache/
+
+# =========================
+# Otros
+# =========================
+
+*.sqlite3
