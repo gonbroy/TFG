@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Travel Planner</title>
+  <style>
+    :root{
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --accent: #2563eb;
+      --accent2: #0ea5e9;
+      --shadow: 0 10px 30px rgba(2,6,23,.08);
+      --radius: 16px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* Top bar */
+    .topbar{
+      background: linear-gradient(90deg, #ffffff 0%, #ffffff 60%, rgba(255,255,255,.85) 100%);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-inner{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .logo{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow);
+    }
+    .brand small{
+      display:block;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0;
+      margin-top: 2px;
+    }
+    .profile-btn{
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow: 0 4px 16px rgba(2,6,23,.06);
+    }
+
+    /* Hero / wave */
+    .hero{
+      background: linear-gradient(135deg, rgba(37,99,235,.08), rgba(14,165,233,.08));
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-inner{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 26px 16px 18px;
+    }
+    .hero h1{
+      margin: 0 0 6px;
+      font-size: 22px;
+    }
+    .hero p{
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* Search card */
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 16px 36px;
+    }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr 1.6fr 1.7fr 1fr auto;
+      gap: 0;
+    }
+
+    .cell{
+      padding: 16px;
+      border-right: 1px solid var(--line);
+    }
+    .cell:last-child{ border-right: none; }
+
+    .label{
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    input[type="text"], input[type="number"], input[type="date"]{
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      outline: none;
+      font-size: 14px;
+      background: #fff;
+    }
+    input:focus{
+      border-color: rgba(37,99,235,.6);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+    }
+
+    .destinations{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    /* Autocomplete dropdown */
+    .autocomplete-list{
+      position: absolute;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(2,6,23,.08);
+      max-height: 220px;
+      overflow: auto;
+      z-index: 60;
+      width: 100%;
+    }
+    .autocomplete-item{
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .autocomplete-item:hover, .autocomplete-item.active{
+      background: linear-gradient(90deg, rgba(37,99,235,.06), rgba(14,165,233,.04));
+    }
+    .dest-row{
+      display:flex;
+      gap: 8px;
+      align-items:center;
+    }
+    .icon-btn{
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 10px;
+      cursor:pointer;
+    }
+    .icon-btn:hover{
+      border-color: rgba(37,99,235,.5);
+    }
+
+    .subtext{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .radio-row{
+      display:flex;
+      gap: 14px;
+      align-items:center;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .radio-row label{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .dates{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .search-btn{
+      height: 100%;
+      min-width: 120px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 0 18px;
+      cursor:pointer;
+    }
+    .search-btn:hover{
+      filter: brightness(1.03);
+    }
+
+    .result{
+      padding: 16px;
+      border-top: 1px solid var(--line);
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+    }
+    pre{
+      margin:0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfdff;
+      overflow:auto;
+      min-height: 120px;
+      font-size: 13px;
+    }
+    .hint{
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px){
+      .grid{
+        grid-template-columns: 1fr;
+      }
+      .cell{
+        border-right:none;
+        border-bottom: 1px solid var(--line);
+      }
+      .cell:last-child{ border-bottom:none; }
+      .search-btn{
+        width: 100%;
+        padding: 16px;
+      }
+      .result{
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          Smart Travel Planner
+          <small>Rutas y precios inteligentes</small>
+        </div>
+      </div>
+      <button class="profile-btn" title="Perfil">
+        👤
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Planifica tu viaje en 1 minuto</h1>
+      <p>Elige destinos, fechas y presupuesto. Nosotros calculamos la mejor combinación.</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <div class="card">
+      <div class="grid">
+
+        <!-- Origen -->
+        <div class="cell">
+          <div class="label">Origen</div>
+          <input id="origin" autocomplete="off" placeholder="Escribe un aeropuerto (ej: Sevilla SVQ)">
+          <div class="subtext">Ej: “Sevilla (SVQ) - Sevilla, Spain”</div>
+        </div>
+
+        <!-- Destinos -->
+        <div class="cell">
+          <div class="label">Destino</div>
+          <div class="destinations" id="destinationsBox">
+            <!-- primera fila (no tiene botón quitar) -->
+            <div class="dest-row">
+              <input class="dest-input" placeholder="Añade destino (ej: París CDG)">
+            </div>
+          </div>
+          <div style="margin-top:8px;">
+            <button class="icon-btn" id="addDestBtn" title="Añadir destino">＋ Añadir destino</button>
+          </div>
+          <div class="subtext">Puedes añadir varios destinos (ruta multi-ciudad).</div>
+        </div>
+
+        <!-- Fecha -->
+        <div class="cell">
+          <div class="label">Fecha</div>
+
+          <div class="radio-row">
+            <label>
+              <input type="radio" name="dateMode" value="concrete" checked>
+              Concreta
+            </label>
+            <label>
+              <input type="radio" name="dateMode" value="flexible">
+              Flexible
+            </label>
+          </div>
+
+          <div id="concreteDates" class="dates">
+            <div>
+              <div class="subtext" style="margin:0 0 6px;">Ida</div>
+              <input type="date" id="dateOut">
+            </div>
+            <div>
+              <div class="subtext" style="margin:0 0 6px;">Vuelta</div>
+              <input type="date" id="dateBack">
+            </div>
+          </div>
+
+          <div id="flexibleDates" style="display:none;">
+            <div class="subtext" style="margin:0 0 6px;">(Flexible) Intervalo / mes (pendiente definir)</div>
+            <input type="text" id="flexibleText" placeholder="Ej: Marzo 2026 / 10-20 Marzo">
+          </div>
+        </div>
+
+        <!-- Presupuesto -->
+        <div class="cell">
+          <div class="label">Presupuesto (€)</div>
+          <input type="number" id="budget" min="0" placeholder="Ej: 300">
+          <div class="subtext">Opcional. Sirve para filtrar u ordenar.</div>
+        </div>
+
+        <!-- Buscar -->
+        <button class="search-btn" id="searchBtn">Buscar</button>
+
+      </div>
+
+      <div class="result">
+        <div>
+          <div class="label">Resultado</div>
+          <pre id="result"></pre>
+        </div>
+        <div>
+          <div class="label">Notas</div>
+          <div class="hint">
+            <p style="margin-top:0;">
+              Esta es la primera versión (MVP). El backend puede devolver una ruta y un coste estimado.
+              Luego iremos mejorando el algoritmo (greedy / metaheurística) e integrando datos reales.
+            </p>
+            <ul>
+              <li>Si el botón no responde: revisa que el backend esté encendido.</li>
+              <li>Si ves “CORS” en consola: CORS middleware en FastAPI.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+<script>
+  // ====== Autocompletar aeropuertos ======
+  // Cargar aeropuertos y preparar autocompletado personalizado
+  let AIRPORTS = [];
+  fetch('airports.json')
+    .then(r => r.json())
+    .then(airports => {
+      AIRPORTS = airports;
+      // Si existe un datalist (fallback), rellenarlo; no es obligatorio
+      const datalist = document.getElementById('airports-list');
+      if (datalist) {
+        airports.forEach(airport => {
+          const opt = document.createElement('option');
+          opt.value = `${airport.name} (${airport.code}) - ${airport.city}, ${airport.country}`;
+          datalist.appendChild(opt);
+        });
+      }
+    })
+    .catch(err => {
+      console.error("No se pudo cargar airports.json", err);
+    });
+
+  // Autocomplete: crea behavior sobre un input (muestra sugerencias que empiezan por lo escrito)
+  function createAutocomplete(input) {
+    // envolver input para posicionar el listado
+    input.setAttribute('autocomplete', 'off');
+    input.style.position = 'relative';
+
+    // contenedor para sugerencias
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'relative';
+    input.parentNode.insertBefore(wrapper, input);
+    wrapper.appendChild(input);
+
+    const list = document.createElement('div');
+    list.className = 'autocomplete-list';
+    list.style.display = 'none';
+    wrapper.appendChild(list);
+
+    let items = [];
+    let index = -1;
+
+    function renderSuggestions(results) {
+      list.innerHTML = '';
+      if (results.length === 0) {
+        list.style.display = 'none';
+        return;
+      }
+      results.slice(0, 8).forEach((airport, i) => {
+        const it = document.createElement('div');
+        it.className = 'autocomplete-item';
+        it.textContent = `${airport.name} (${airport.code}) - ${airport.city}, ${airport.country}`;
+        it.dataset.code = airport.code;
+        it.addEventListener('mousedown', (e) => {
+          // mousedown para evitar blur antes de click
+          e.preventDefault();
+          input.value = it.textContent;
+          hideList();
+        });
+        list.appendChild(it);
+      });
+      items = Array.from(list.querySelectorAll('.autocomplete-item'));
+      index = -1;
+      list.style.display = 'block';
+    }
+
+    function hideList() {
+      list.style.display = 'none';
+      index = -1;
+    }
+
+    function doSearch(q) {
+      if (!q || AIRPORTS.length === 0) { renderSuggestions([]); return; }
+      const val = q.trim().toLowerCase();
+      // buscar por nombre, ciudad o código; coincidencia al inicio
+      const res = AIRPORTS.filter(a =>
+        a.name.toLowerCase().startsWith(val) ||
+        a.city.toLowerCase().startsWith(val) ||
+        a.code.toLowerCase().startsWith(val)
+      );
+      renderSuggestions(res);
+    }
+
+    input.addEventListener('input', (e) => {
+      doSearch(e.target.value);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (list.style.display === 'none') return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        index = Math.min(items.length - 1, index + 1);
+        items.forEach(it => it.classList.remove('active'));
+        if (items[index]) items[index].classList.add('active');
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        index = Math.max(0, index - 1);
+        items.forEach(it => it.classList.remove('active'));
+        if (items[index]) items[index].classList.add('active');
+      } else if (e.key === 'Enter') {
+        if (index >= 0 && items[index]) {
+          e.preventDefault();
+          input.value = items[index].textContent;
+          hideList();
+        }
+      } else if (e.key === 'Escape') {
+        hideList();
+      }
+    });
+
+    // ocultar cuando pierde foco (pequeño timeout para permitir click)
+    input.addEventListener('blur', () => setTimeout(hideList, 150));
+
+    // devolver helper para tests si hace falta
+    return { input, list };
+  }
+
+  // aplicar autocomplete al origen y al primer destino
+  const originInput = document.getElementById('origin');
+  createAutocomplete(originInput);
+  document.querySelectorAll('.dest-input').forEach(inp => createAutocomplete(inp));
+
+  // ====== UI: añadir / quitar destinos ======
+  const destinationsBox = document.getElementById("destinationsBox");
+  const addDestBtn = document.getElementById("addDestBtn");
+
+  addDestBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const row = document.createElement("div");
+    row.className = "dest-row";
+    row.innerHTML = `
+      <input class="dest-input" placeholder="Añade destino (ej: Roma FCO)">
+      <button class="icon-btn remove-btn" title="Quitar destino">✕</button>
+    `;
+    destinationsBox.appendChild(row);
+
+    // aplicar autocompletado al nuevo input
+    const newInput = row.querySelector('.dest-input');
+    createAutocomplete(newInput);
+
+    // enfocar el nuevo input
+    newInput.focus();
+
+    row.querySelector(".remove-btn").addEventListener("click", (ev) => {
+      ev.preventDefault();
+      row.remove();
+    });
+  });
+
+  // ====== UI: modo fecha ======
+  const radios = document.querySelectorAll('input[name="dateMode"]');
+  const concreteDates = document.getElementById("concreteDates");
+  const flexibleDates = document.getElementById("flexibleDates");
+
+  radios.forEach(r => {
+    r.addEventListener("change", () => {
+      const mode = document.querySelector('input[name="dateMode"]:checked').value;
+      if(mode === "concrete"){
+        concreteDates.style.display = "grid";
+        flexibleDates.style.display = "none";
+      } else {
+        concreteDates.style.display = "none";
+        flexibleDates.style.display = "block";
+      }
+    });
+  });
+
+  // ====== Helpers ======
+  // Obtener destinos tal cual (permitir campos vacíos)
+  function getDestinationsRaw() {
+    return Array.from(document.querySelectorAll(".dest-input"))
+      .map(i => i.value.trim());
+  }
+
+  // Extra: intentar extraer el código IATA si viene ".... (SVQ) - ..."
+  function extractIata(text) {
+    const m = text.match(/\(([A-Z]{3})\)/);
+    return m ? m[1] : text;
+  }
+
+  // ====== Acción Buscar ======
+  const searchBtn = document.getElementById("searchBtn");
+  const resultEl = document.getElementById("result");
+
+  searchBtn.addEventListener("click", async () => {
+    try {
+      resultEl.textContent = "Buscando...";
+
+      const originRaw = document.getElementById("origin").value.trim();
+      const destsRaw = getDestinationsRaw();
+      const budget = document.getElementById("budget").value;
+
+      if(!originRaw){
+        resultEl.textContent = "⚠️ Escribe un origen.";
+        return;
+      }
+      // Nota: permitimos que haya destinos vacíos. Si quieres forzar al menos
+      // uno no vacío, añade una validación aquí.
+
+      const dateMode = document.querySelector('input[name="dateMode"]:checked').value;
+
+      // Por ahora, backend solo necesita origin + destinations (mínimo).
+      // Extra: enviamos campos opcionales, por si luego los añades al backend.
+      const payload = {
+        origin: extractIata(originRaw),
+        destinations: destsRaw.map(extractIata),
+        date_mode: dateMode,
+        date_out: document.getElementById("dateOut").value || null,
+        date_back: document.getElementById("dateBack").value || null,
+        flexible: document.getElementById("flexibleText").value.trim() || null,
+        budget: budget ? Number(budget) : null
+      };
+
+      const response = await fetch("http://127.0.0.1:8000/route", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      resultEl.textContent = JSON.stringify(data, null, 2);
+
+    } catch (err) {
+      console.error(err);
+      resultEl.textContent = "❌ Error al llamar al backend. Revisa consola (F12) y que el servidor esté encendido.";
+    }
+  });
+</script>
+
+</body>
+</html>

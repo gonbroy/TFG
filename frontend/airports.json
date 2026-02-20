@@ -1,0 +1,12 @@
+[
+  {"name": "Sevilla Airport", "code": "SVQ", "city": "Sevilla", "country": "Spain"},
+  {"name": "Paris Charles de Gaulle Airport", "code": "CDG", "city": "Paris", "country": "France"},
+  {"name": "Rome Fiumicino Airport", "code": "FCO", "city": "Rome", "country": "Italy"},
+  {"name": "Berlin Brandenburg Airport", "code": "BER", "city": "Berlin", "country": "Germany"},
+  {"name": "London Heathrow Airport", "code": "LHR", "city": "London", "country": "United Kingdom"},
+  {"name": "Madrid Barajas Airport", "code": "MAD", "city": "Madrid", "country": "Spain"},
+  {"name": "Barcelona El Prat Airport", "code": "BCN", "city": "Barcelona", "country": "Spain"},
+  {"name": "Amsterdam Schiphol Airport", "code": "AMS", "city": "Amsterdam", "country": "Netherlands"},
+  {"name": "Frankfurt Airport", "code": "FRA", "city": "Frankfurt", "country": "Germany"},
+  {"name": "Lisbon Humberto Delgado Airport", "code": "LIS", "city": "Lisbon", "country": "Portugal"}
+]
