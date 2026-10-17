@@ -1,0 +1,273 @@
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #0f172a;
+  background: #f6f7fb;
+}
+
+/* --- Topbar estilo “dibujo” --- */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.topbar-inner{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-badge{
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #eef2ff;
+  border: 1px solid #e2e8f0;
+}
+
+.brand-text strong{
+  display: block;
+  font-size: 15px;
+  line-height: 1.1;
+}
+.brand-text small{
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.profile-btn{
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  position: relative;
+}
+
+.profile-dot{
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #0f172a;
+  display: inline-block;
+  opacity: .75;
+}
+
+.topbar-wave{
+  height: 10px;
+  background:
+    radial-gradient(circle at 10px 6px, transparent 7px, #e2e8f0 7px, #e2e8f0 8px, transparent 8px) 0 0/18px 10px repeat-x;
+  opacity: .7;
+}
+
+/* --- Layout principal (2 columnas como tu boceto) --- */
+.page{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 22px 18px 34px;
+}
+
+.layout{
+  display: grid;
+  grid-template-columns: 1.7fr 0.9fr; /* izquierda más grande, derecha más estrecha */
+  gap: 18px;
+  align-items: start;
+}
+
+/* --- Cards --- */
+.card{
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(2, 6, 23, .08);
+  padding: 18px;
+}
+
+.card h2{
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  letter-spacing: .2px;
+}
+
+/* --- Detalles: lista con flechas --- */
+.detail-list{
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px;
+  background: #fbfcff;
+}
+
+.detail-item{
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 12px;
+  background: #fff;
+}
+
+.detail-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.label{
+  color: #64748b;
+  font-size: 13px;
+}
+
+.value{
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.value.price{
+  font-size: 15px;
+}
+
+.arrow{
+  text-align: center;
+  padding: 10px 0;
+  color: #94a3b8;
+  font-size: 18px;
+  user-select: none;
+}
+
+.details-note{
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.pill{
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  border: 1px solid #e0e7ff;
+}
+
+/* --- Pago: compacto como el boceto --- */
+.card-pay{
+  padding: 18px;
+}
+
+.pay-form{
+  display: grid;
+  gap: 12px;
+}
+
+.pay-methods{
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.pay-methods legend{
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.radio{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  background: #fff;
+}
+
+.radio input{
+  transform: translateY(1px);
+}
+
+.divider{
+  height: 1px;
+  background: #e2e8f0;
+  margin: 2px 0 6px;
+}
+
+.field{
+  display: grid;
+  gap: 6px;
+}
+
+.field span{
+  font-size: 12px;
+  color: #64748b;
+}
+
+.field input{
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  outline: none;
+  background: #fff;
+}
+
+.field input:focus{
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, .25);
+}
+
+.btn-pay{
+  height: 42px;
+  border: 0;
+  border-radius: 12px;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-pay:hover{
+  filter: brightness(1.05);
+}
+
+.fineprint{
+  margin: 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* --- Responsive: en móvil se apila --- */
+@media (max-width: 860px){
+  .layout{
+    grid-template-columns: 1fr;
+  }
+  .card-pay{
+    order: 2;
+  }
+}

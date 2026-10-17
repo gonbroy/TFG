@@ -1,0 +1,275 @@
+.results-page .wrap{ max-width: 1100px; margin: 22px auto; padding: 0 18px; }
+
+/* Resumen */
+.results-page .summary{ padding: 18px; }
+.results-page .summary-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.results-page .summary-item{
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.04);
+  background: linear-gradient(180deg, rgba(17,24,39,.02), rgba(17,24,39,0));
+}
+
+.results-page .kicker{
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+.results-page .strong{ font-weight: 800; }
+.results-page .muted{ color: #6b7280; font-size: 13px; }
+
+.results-page .chips{ display:flex; gap: 8px; flex-wrap: wrap; }
+.results-page .chip{
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.04);
+  background: #fff;
+  font-weight: 700;
+}
+
+/* Resultados */
+.results-page .results-card{ overflow: hidden; }
+.results-page .results-head{
+  display:grid;
+  grid-template-columns: 1.1fr 1.7fr .6fr .9fr;
+  gap: 6px;
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.02);
+  color: #6b7280;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.results-page .results{ display:flex; flex-direction: column; }
+.results-page .result-row{
+  display:grid;
+  grid-template-columns: 1.1fr 1.7fr .6fr .9fr;
+  gap: 6px;
+  padding: 8px 10px;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.02);
+}
+.results-page .result-row:hover{ background: rgba(37,99,235,.03); }
+
+.results-page .right{ text-align:right; }
+.results-page .price{ font-size: 16px; font-weight: 900; }
+
+/* Ruta */
+.results-page .route{
+  display:flex;
+  align-items:center;
+  gap: 10apx;
+  flex-wrap: wrap;
+}
+.results-page .airport{
+  font-weight: 900;
+  padding: 3px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.02);
+  background: #fff;
+  font-size: 12px;
+}
+.results-page .arrow{ color:#6b7280; font-weight: 800; }
+.results-page .badge{
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(34,197,94,.12);
+  color: #166534;
+  border: 1px solid rgba(34,197,94,.25);
+}
+
+/* Botones */
+.results-page .actions{
+  display:flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.results-page .btn:hover{ box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+.results-page .btn-ghost{ background: transparent; }
+
+/* Responsive */
+@media (max-width: 900px){
+  .results-page .summary-grid{ grid-template-columns: 1fr 1fr; }
+  .results-page .results-head{ display:none; }
+  .results-page .result-row{ grid-template-columns: 1fr; }
+  .results-page .right{ text-align:left; }
+  .results-page .actions{ justify-content:flex-start; }
+}
+
+.results-page .modal{
+  position: fixed;
+  inset: 0;
+  display: none;           /* oculto */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.35);
+  z-index: 9999;
+}
+
+.results-page .modal.show{
+  display: flex;           /* visible */
+}
+
+.results-page .modal-content{
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  width: min(600px, 95%);
+  position: relative;
+}
+
+.results-page .close{
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.results-page{
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+/* ===== COLUMNA CHECKBOX ===== */
+
+.results-page .results-head{
+  grid-template-columns: 3px 1.1fr 1.7fr .6fr .9fr;
+}
+
+.results-page .result-row{
+  grid-template-columns: 3px 1.1fr 1.7fr .6fr .9fr;
+}
+
+.col-check{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.compare-check{
+  width:1px;
+  height:1px;
+  cursor:pointer;
+}
+
+/* fila seleccionada */
+.result-row.selected{
+  background: rgba(37,99,235,.06);
+  outline: 2px solid rgba(37,99,235,.2);
+}
+
+
+/* ===== BARRA COMPARAR ===== */
+
+.compare-bar{
+  position: sticky;
+  bottom: 1px;
+  margin: 1px;
+  padding: 1px 1px;
+  border-radius: 1px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 1px rgba(0,0,0,0.05);
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  z-index: 100;
+}
+/* ===== FIX COMPACTO (SIN ROMPER GRID) ===== */
+
+/* typo fix */
+.results-page .route{ gap: 8px !important; }  /* antes tenías 10apx */
+
+/* Grid con checkbox (compacto, usable) */
+.results-page .results-head,
+.results-page .result-row{
+  grid-template-columns: 44px 1.15fr 1.85fr 0.55fr 1.10fr !important;
+  gap: 10px !important;
+}
+
+/* Checkbox centrado y visible */
+.results-page .col-check{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.results-page .compare-check{
+  width: 16px !important;
+  height: 16px !important;
+  cursor: pointer;
+}
+
+/* Row spacing compacto pero con aire */
+.results-page .results-head{
+  padding: 10px 14px !important;
+  font-size: 11px !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+.results-page .result-row{
+  padding: 12px 14px !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+/* Airport chips más compactos */
+.results-page .airport{
+  padding: 4px 8px !important;
+  border-radius: 10px !important;
+  font-size: 12px !important;
+}
+
+/* Badge más compacto */
+.results-page .badge{
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+}
+
+/* Precio un poco menos grande */
+.results-page .price{
+  font-size: 16px !important;
+  white-space: nowrap;
+}
+
+/* Acciones: que no se apilen raro */
+.results-page .actions{
+  display:flex;
+  justify-content:flex-end;
+  gap: 8px !important;
+  flex-wrap: wrap;
+}
+
+.results-page .btn{
+  padding: 8px 10px !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+}
+
+/* Barra comparar: compacta pero visible */
+.compare-bar{
+  position: sticky;
+  bottom: 12px;
+  margin: 12px 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}

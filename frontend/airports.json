@@ -1,12 +1,72 @@
 [
-  {"name": "Sevilla Airport", "code": "SVQ", "city": "Sevilla", "country": "Spain"},
-  {"name": "Paris Charles de Gaulle Airport", "code": "CDG", "city": "Paris", "country": "France"},
-  {"name": "Rome Fiumicino Airport", "code": "FCO", "city": "Rome", "country": "Italy"},
-  {"name": "Berlin Brandenburg Airport", "code": "BER", "city": "Berlin", "country": "Germany"},
-  {"name": "London Heathrow Airport", "code": "LHR", "city": "London", "country": "United Kingdom"},
-  {"name": "Madrid Barajas Airport", "code": "MAD", "city": "Madrid", "country": "Spain"},
-  {"name": "Barcelona El Prat Airport", "code": "BCN", "city": "Barcelona", "country": "Spain"},
-  {"name": "Amsterdam Schiphol Airport", "code": "AMS", "city": "Amsterdam", "country": "Netherlands"},
-  {"name": "Frankfurt Airport", "code": "FRA", "city": "Frankfurt", "country": "Germany"},
-  {"name": "Lisbon Humberto Delgado Airport", "code": "LIS", "city": "Lisbon", "country": "Portugal"}
+  {
+    "name": "Aeropuerto de Sevilla",
+    "code": "SVQ",
+    "city": "Sevilla",
+    "country": "España",
+    "search": ["sevilla", "svq", "aeropuerto sevilla"]
+  },
+  {
+    "name": "Aeropuerto Charles de Gaulle",
+    "code": "CDG",
+    "city": "París",
+    "country": "Francia",
+    "search": ["paris", "parís", "cdg", "charles de gaulle", "aeropuerto paris"]
+  },
+  {
+    "name": "Aeropuerto de Roma Fiumicino",
+    "code": "FCO",
+    "city": "Roma",
+    "country": "Italia",
+    "search": ["roma", "fco", "fiumicino", "aeropuerto roma"]
+  },
+  {
+    "name": "Aeropuerto de Berlín Brandeburgo",
+    "code": "BER",
+    "city": "Berlín",
+    "country": "Alemania",
+    "search": ["berlin", "berlín", "ber", "brandeburgo", "aeropuerto berlin"]
+  },
+  {
+    "name": "Aeropuerto de Londres Heathrow",
+    "code": "LHR",
+    "city": "Londres",
+    "country": "Reino Unido",
+    "search": ["londres", "london", "lhr", "heathrow", "aeropuerto londres"]
+  },
+  {
+    "name": "Aeropuerto Adolfo Suárez Madrid-Barajas",
+    "code": "MAD",
+    "city": "Madrid",
+    "country": "España",
+    "search": ["madrid", "mad", "barajas", "aeropuerto madrid"]
+  },
+  {
+    "name": "Aeropuerto de Barcelona-El Prat",
+    "code": "BCN",
+    "city": "Barcelona",
+    "country": "España",
+    "search": ["barcelona", "bcn", "el prat", "aeropuerto barcelona"]
+  },
+  {
+    "name": "Aeropuerto de Ámsterdam Schiphol",
+    "code": "AMS",
+    "city": "Ámsterdam",
+    "country": "Países Bajos",
+    "search": ["amsterdam", "ámsterdam", "ams", "schiphol", "aeropuerto amsterdam"]
+  },
+  {
+    "name": "Aeropuerto de Frankfurt",
+    "code": "FRA",
+    "city": "Frankfurt",
+    "country": "Alemania",
+    "search": ["frankfurt", "fra", "aeropuerto frankfurt"]
+  },
+  {
+    "name": "Aeropuerto Humberto Delgado",
+    "code": "LIS",
+    "city": "Lisboa",
+    "country": "Portugal",
+    "search": ["lisboa", "lisbon", "lis", "humberto delgado", "aeropuerto lisboa"]
+  }
 ]

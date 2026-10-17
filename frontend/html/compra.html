@@ -1,0 +1,127 @@
+<!-- compra.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Travel Planner - Compra</title>
+
+  <link rel="stylesheet" href="../css/compra.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/footer.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <main class="page">
+    <section class="layout">
+      <!-- Detalles -->
+      <article class="card card-details">
+        <h2>Detalles de compra</h2>
+
+        <div class="detail-list">
+          <div class="detail-item">
+            <div class="detail-row">
+              <span class="label">Destino 1</span>
+              <span class="value">París</span>
+              <span class="value">10 - 15 julio</span>
+            </div>
+          </div>
+
+          <div class="arrow" aria-hidden="true">↓</div>
+
+          <div class="detail-item">
+            <div class="detail-row">
+              <span class="label">Destino 2</span>
+              <span class="value">Milán</span>  
+              <span class="value">15 - 20 julio</span>
+            </div>
+          </div>
+
+          <div class="arrow" aria-hidden="true">↓</div>
+
+          <div class="detail-item">
+            <div class="detail-row">
+              <span class="label">Destino 3</span>
+              <span class="value">Roma</span>
+              <span class="value">20 - 25 julio</span>
+            </div>
+          </div>
+
+          <div class="arrow" aria-hidden="true">↓</div>
+
+          <div class="detail-item">
+            <div class="detail-row">
+              <span class="label">Precio total</span>
+              <span class="value price">200 €</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="details-note">
+          <span class="pill">Info</span>
+          <p>Revisa los datos antes de pagar. Puedes volver atrás y cambiar fechas/destino.</p>
+        </div>
+      </article>
+
+      <!-- Columna derecha: Pago -->
+      <aside class="card card-pay">
+        <h2>Pago</h2>
+
+        <label class="field">
+          <span>Correo electronico (para factura y billetes)</span>
+          <input type="email" placeholder="tu@email.com">
+        </label>
+
+        <form class="pay-form" autocomplete="on">
+          <fieldset class="pay-methods">
+            <legend>Método</legend>
+
+            <label class="radio">
+              <input type="radio" name="payMethod" value="card" checked>
+              <span>Tarjeta</span>
+            </label>
+
+            <label class="radio">
+              <input type="radio" name="payMethod" value="paypal">
+              <span>PayPal</span>
+            </label>
+
+            <label class="radio">
+              <input type="radio" name="payMethod" value="bizum">
+              <span>Bizum</span>
+            </label>
+          </fieldset>
+
+          <div class="divider" aria-hidden="true"></div>
+
+          <label class="field">
+            <span>Nº cuenta / Tarjeta</span>
+            <input type="text" inputmode="numeric" placeholder="1234 5678 9012 3456">
+          </label>
+
+          <label class="field">
+            <span>Fecha cad.</span>
+            <input type="text" inputmode="numeric" placeholder="MM/AA">
+          </label>
+
+          <label class="field">
+            <span>CVV</span>
+            <input type="password" inputmode="numeric" maxlength="4" placeholder="123">
+          </label>
+
+          <button class="btn-pay" type="button">Pagar</button>
+
+        </form>
+      </aside>
+    </section>
+    <!--    <h1>Compra realizada con éxito</h1>
+        <p>¡Gracias por tu compra! Tu viaje ha sido reservado correctamente.</p>
+        <a href="index.html" class="btn">Volver al inicio</a>-->
+  </main>
+
+  <div id="footer"></div>
+  <script src="../include.js"></script>
+</body>
+</html>

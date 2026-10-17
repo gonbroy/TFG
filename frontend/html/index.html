@@ -1,0 +1,603 @@
+<!-- tailwindcss
+ firebase-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Travel Planner</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/footer.css">
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Planifica tu viaje en 1 minuto</h1>
+      <p>Elige destinos, fechas y presupuesto. Nosotros calculamos la mejor combinación.</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <div class="card">
+      <div class="grid">
+
+        <!-- Origen -->
+        <div class="cell">
+          <div class="label">Origen</div>
+          <input id="origin" autocomplete="off" placeholder="Escribe un aeropuerto (ej: Sevilla SVQ)">
+          <div class="subtext">Ej: “Sevilla (SVQ) - Sevilla, Spain”</div>
+        </div>
+
+        <!-- Destinos -->
+        <div class="cell">
+          <div class="label">Destino</div>
+
+          <div class="destinations" id="destinationsBox">
+            <!-- primera fila (no tiene botón quitar) -->
+            <div class="dest-row">
+              <input class="dest-input" autocomplete="off" placeholder="Añade destino (ej: París CDG)">
+
+              <input type="number"
+                     class="days-input"
+                     min="1"
+                     value="1"
+                     style="width:90px"
+                     title="Días mínimos"
+                     placeholder="Días">
+
+              <span style="font-size:12px;color:#64748b;">días</span>
+            </div>
+          </div>
+
+          <div style="margin-top:8px;">
+            <button class="icon-btn" id="addDestBtn" title="Añadir destino">＋ Añadir destino</button>
+          </div>
+
+          <div class="subtext">Puedes añadir varios destinos (ruta multi-ciudad).</div>
+        </div>
+
+        <!-- Fecha -->
+        <div class="cell">
+          <div class="label">Fecha</div>
+
+          <div class="radio-row">
+            <label>
+              <input type="radio" name="dateMode" value="concrete" checked>
+              Concreta
+            </label>
+            <label>
+              <input type="radio" name="dateMode" value="flexible">
+              Flexible
+            </label>
+          </div>
+
+          <div id="concreteDates" class="dates">
+            <div>
+              <div class="subtext" style="margin:0 0 6px;">Ida</div>
+              <input type="date" id="dateOut">
+            </div>
+            <div>
+              <div class="subtext" style="margin:0 0 6px;">Vuelta</div>
+              <input type="date" id="dateBack">
+            </div>
+          </div>
+
+          <div id="flexibleDates" style="display:none;">
+            <div class="subtext" style="margin:0 0 6px;">(Flexible) Intervalo en un mes (pendiente definir)</div>
+            <input type="text" id="flexibleText" placeholder="Ej: 10-20 Marzo 2026">
+          </div>
+        </div>
+
+        <!-- Presupuesto -->
+        <div class="cell">
+          <div class="label">Presupuesto (€)</div>
+          <input type="number" id="budget" min="0" placeholder="Ej: 300">
+          <div class="subtext">Opcional. Establece límite de presupuesto para vuelos.</div>
+        </div>
+
+        <!-- Buscar -->
+        <button type="button"
+                class="search-btn"
+                id="searchBtn"
+                title="Buscar">
+          Buscar
+        </button>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <div class="cta-section">
+        <!-- Usuario -->
+        <div class="cta-card">
+          <div class="cta-icon">👤</div>
+          <h3>Descubre ventajas de ser usuario</h3>
+          <p>Guarda tus rutas, recibe alertas de precios y accede a recomendaciones personalizadas.</p>
+
+          <div class="cta-buttons">
+            <button class="btn-primary" onclick="openModal()">Iniciar sesion</button>
+            <a href="login.html" class="btn-primary">Iniciar sesión</a>
+            <a href="register.html" class="btn-secondary">Registrarse</a>
+          </div>
+        </div>
+
+        <div id="modal" class="modal">
+        <div class="modal-content">
+
+          <span class="close" onclick="closeModal()">✕</span>
+
+          <h2>Inicio de sesión</h2>
+          <div class="cell">
+                <div class="label">Inicio de sesión</div>
+                <h3>Usuario:</h3>
+                <input id="usuario" autocomplete="off">
+                <h3>Contraseña:</h3>
+                <input id="contrasena" type="password" autocomplete="off">
+
+                <button class="search-btn" id="loginBtn">Iniciar sesión</button>
+              </div>
+          <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+        </div>
+      </div>
+      <script>
+      function openModal(){
+        document.getElementById("modal").style.display = "flex";
+      }
+
+      function closeModal(){
+        document.getElementById("modal").style.display = "none";
+      }
+      </script>
+
+        <!-- Destinos -->
+        <div class="cta-card">
+          <div class="cta-icon">🌍</div>
+          <h3>Descubrir destinos</h3>
+          <p>Explora ciudades populares, encuentra inspiración y planifica tu próximo viaje.</p>
+
+          <div class="cta-buttons">
+            <a href="destinos.html" class="btn-primary">Explorar destinos</a>
+          </div>
+        </div>
+      </div>
+
+      <!--PREGUNTAS FRECUENTES -->
+
+      <section class="faq card">
+        <div class="faq-head"> 
+          <h2>Preguntas frecuentes</h2>
+          <p>Resolvemos las dudas más comunes sobre búsquedas, precios y reservas.</p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>
+              ¿Cómo encuentra Smart Travel Planner los vuelos más baratos?
+              <span class="chev">▾</span>
+            </summary>
+            <div class="faq-content">
+              Comparamos combinaciones de rutas y fechas dentro de tus criterios (origen, destinos, fechas y presupuesto) y te mostramos las opciones ordenadas por precio.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              ¿Los precios incluyen tasas y equipaje?
+              <span class="chev">▾</span>
+            </summary>
+            <div class="faq-content">
+              Normalmente mostramos el precio base. En “Más detalles” verás el desglose (tasas, equipaje, etc.) según la fuente del vuelo.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              ¿Puedo buscar rutas multi-ciudad (varios destinos)?
+              <span class="chev">▾</span>
+            </summary>
+            <div class="faq-content">
+              Sí. Puedes añadir varios destinos y definir días mínimos por destino. El sistema genera combinaciones y te sugiere las más baratas.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              ¿Qué significa búsqueda “Flexible”?
+              <span class="chev">▾</span>
+            </summary>
+            <div class="faq-content">
+              Flexible permite un rango de fechas alrededor de tu selección para encontrar precios más bajos (por ejemplo, ±3 días).
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              ¿Necesito cuenta para usar la web?
+              <span class="chev">▾</span>
+            </summary>
+            <div class="faq-content">
+              No es obligatorio, pero con cuenta puedes guardar rutas, recibir alertas de precio y tener recomendaciones personalizadas.
+            </div>
+          </details>
+        </div>
+      </section>
+      <!-- preguntar si es mejor con esto o sin esto a los usuarios -->
+      <script>
+        document.querySelectorAll(".faq-item").forEach((item) => {
+          item.addEventListener("toggle", () => {
+            if (item.open) {
+              document.querySelectorAll(".faq-item").forEach((other) => {
+                if (other !== item) other.open = false;
+              });
+            }
+          });
+        });
+      </script> 
+
+
+
+    </div>
+  </main>
+
+  <div id="footer"></div>
+  <script src="../include.js"></script>
+
+  <script>
+    // =========================
+    // Helpers (IATA + seleccionados)
+    // =========================
+    let AIRPORTS = [];
+
+    function extractIata(text) {
+      const t = (text || "").trim();
+      const m = t.match(/\(([A-Z]{3})\)/);
+      return m ? m[1] : t.toUpperCase();
+    }
+
+    function isValidIata(code) {
+      if (!code || code.length !== 3) return false;
+      return AIRPORTS.some(a => a.code.toUpperCase() === code.toUpperCase());
+    }
+
+    function getSelectedIatas() {
+      const set = new Set();
+
+      const originRaw = document.getElementById("origin")?.value.trim();
+      if (originRaw) set.add(extractIata(originRaw));
+
+      document.querySelectorAll(".dest-input").forEach(inp => {
+        const v = inp.value.trim();
+        if (v) set.add(extractIata(v));
+      });
+
+      return set;
+    }
+
+    function getDestinations() {
+      return Array.from(document.querySelectorAll(".dest-row")).map(row => {
+        const destText = row.querySelector(".dest-input")?.value.trim() || "";
+        const days = Number(row.querySelector(".days-input")?.value || 1);
+        return { dest: extractIata(destText), minDays: days };
+      }).filter(d => d.dest);
+    }
+
+    // =========================
+    // Autocomplete custom
+    // =========================
+    function createAutocomplete(input) {
+      input.setAttribute('autocomplete', 'off');
+
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'relative';
+      input.parentNode.insertBefore(wrapper, input);
+      wrapper.appendChild(input);
+
+      const list = document.createElement('div');
+      list.className = 'autocomplete-list';
+      list.style.display = 'none';
+      wrapper.appendChild(list);
+
+      let items = [];
+      let index = -1;
+
+      function hideList() {
+        list.style.display = 'none';
+        index = -1;
+      }
+
+      function renderSuggestions(results) {
+        list.innerHTML = '';
+        if (results.length === 0) { hideList(); return; }
+
+        results.slice(0, 8).forEach((airport) => {
+          const it = document.createElement('div');
+          it.className = 'autocomplete-item';
+          it.textContent = `${airport.name} (${airport.code}) - ${airport.city}, ${airport.country}`;
+          it.dataset.code = airport.code;
+
+          it.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            input.value = it.textContent;
+            hideList();
+          });
+
+          list.appendChild(it);
+        });
+
+        items = Array.from(list.querySelectorAll('.autocomplete-item'));
+        index = -1;
+        list.style.display = 'block';
+      }
+
+      function doSearch(q) {
+        if (!q || AIRPORTS.length === 0) { renderSuggestions([]); return; }
+
+        const val = q.trim().toLowerCase();
+        const selected = getSelectedIatas();
+        const current = extractIata(input.value);
+
+        const res = AIRPORTS.filter(a => {
+          const code = a.code.toUpperCase();
+
+          // ✅ No mostrar seleccionados (pero permite el actual si ya estaba escrito)
+          if (selected.has(code) && code !== current) return false;
+
+          return (
+            a.name.toLowerCase().includes(val) ||
+            a.city.toLowerCase().includes(val) ||
+            a.code.toLowerCase().startsWith(val)
+          );
+        });
+
+        renderSuggestions(res);
+      }
+
+      input.addEventListener('input', (e) => doSearch(e.target.value));
+
+      input.addEventListener('keydown', (e) => {
+        if (list.style.display === 'none') return;
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          index = Math.min(items.length - 1, index + 1);
+          items.forEach(it => it.classList.remove('active'));
+          if (items[index]) items[index].classList.add('active');
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          index = Math.max(0, index - 1);
+          items.forEach(it => it.classList.remove('active'));
+          if (items[index]) items[index].classList.add('active');
+        } else if (e.key === 'Enter') {
+          if (index >= 0 && items[index]) {
+            e.preventDefault();
+            input.value = items[index].textContent;
+            hideList();
+          }
+        } else if (e.key === 'Escape') {
+          hideList();
+        }
+      });
+
+      input.addEventListener('blur', () => setTimeout(hideList, 150));
+
+      // ✅ Evita inventados y duplicados al perder foco
+      input.addEventListener("blur", () => {
+        const raw = input.value.trim();
+        if (!raw) return;
+
+        const code = extractIata(raw);
+        if (!isValidIata(code)) {
+          alert("Aeropuerto no válido. Selecciona uno real de la lista.");
+          input.value = "";
+          return;
+        }
+
+        // Duplicados: mismo IATA en dos inputs
+        const allCodes = [];
+        const originCode = extractIata(document.getElementById("origin").value || "");
+        if (originCode) allCodes.push(originCode);
+
+        document.querySelectorAll(".dest-input").forEach(inp => {
+          const c = extractIata(inp.value || "");
+          if (c) allCodes.push(c);
+        });
+
+        const count = allCodes.filter(c => c === code).length;
+        if (count > 1) {
+          alert(`Aeropuerto repetido (${code}). Elige otro.`);
+          input.value = "";
+        }
+      });
+    }
+
+    // =========================
+    // Load airports + init
+    // =========================
+    fetch('../airports.json')
+      .then(r => r.json())
+      .then(airports => {
+        AIRPORTS = airports;
+
+        createAutocomplete(document.getElementById('origin'));
+        document.querySelectorAll('.dest-input').forEach(inp => createAutocomplete(inp));
+      })
+      .catch(err => console.error("No se pudo cargar airports.json", err));
+
+    // =========================
+    // Add destination row
+    // =========================
+    const destinationsBox = document.getElementById("destinationsBox");
+    const addDestBtn = document.getElementById("addDestBtn");
+
+    addDestBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const row = document.createElement("div");
+      row.className = "dest-row";
+      row.innerHTML = `
+        <input class="dest-input" autocomplete="off" placeholder="Añade destino (ej: Roma FCO)">
+
+        <input type="number"
+              class="days-input"
+              min="1"
+              value="1"
+              style="width:90px"
+              title="Días mínimos"
+              placeholder="Días">
+
+        <span style="font-size:12px;color:#64748b;">días</span>
+
+        <button class="icon-btn remove-btn" title="Quitar destino">✕</button>
+      `;
+      destinationsBox.appendChild(row);
+
+      const newInput = row.querySelector('.dest-input');
+      createAutocomplete(newInput);
+      newInput.focus();
+
+      row.querySelector(".remove-btn").addEventListener("click", (ev) => {
+        ev.preventDefault();
+        row.remove();
+      });
+    });
+
+    // =========================
+    // Date rules: no past + back >= out
+    // =========================
+    document.addEventListener("DOMContentLoaded", () => {
+      const today = new Date().toISOString().split("T")[0];
+      const dateOut = document.getElementById("dateOut");
+      const dateBack = document.getElementById("dateBack");
+
+      dateOut.min = today;
+      dateBack.min = today;
+
+      dateOut.addEventListener("change", () => {
+        dateBack.min = dateOut.value || today;
+        if (dateBack.value && dateBack.value < dateOut.value) {
+          dateBack.value = "";
+        }
+      });
+    });
+
+    // =========================
+    // Date mode toggle
+    // =========================
+    const radios = document.querySelectorAll('input[name="dateMode"]');
+    const concreteDates = document.getElementById("concreteDates");
+    const flexibleDates = document.getElementById("flexibleDates");
+
+    radios.forEach(r => {
+      r.addEventListener("change", () => {
+        const mode = document.querySelector('input[name="dateMode"]:checked').value;
+        if (mode === "concrete") {
+          concreteDates.style.display = "grid";
+          flexibleDates.style.display = "none";
+        } else {
+          concreteDates.style.display = "none";
+          flexibleDates.style.display = "block";
+        }
+      });
+    });
+
+    // =========================
+    // Save + open results
+    // =========================
+    document.getElementById("searchBtn").addEventListener("click", async function (e) {
+      // Validar que airports.json está cargado
+      if (!AIRPORTS.length) {
+        e.preventDefault();
+        alert("Aún se están cargando los aeropuertos. Espera un segundo y prueba de nuevo.");
+        return;
+      }
+
+      const dateMode = document.querySelector('input[name="dateMode"]:checked')?.value || "concrete";
+      const originCode = extractIata(document.getElementById("origin").value);
+      const destinations = getDestinations();
+
+      if (!isValidIata(originCode)) {
+        e.preventDefault();
+        alert("Origen no válido. Selecciona un aeropuerto real de la lista.");
+        return;
+      }
+
+      if (!destinations.length) {
+        e.preventDefault();
+        alert("Añade al menos un destino.");
+        return;
+      }
+
+      for (const d of destinations) {
+        if (!isValidIata(d.dest)) {
+          e.preventDefault();
+          alert(`Destino no válido: ${d.dest}. Selecciona un aeropuerto real de la lista.`);
+          return;
+        }
+        if (d.dest === originCode) {
+          e.preventDefault();
+          alert("Un destino no puede ser igual al origen.");
+          return;
+        }
+      }
+
+      const dateOut = document.getElementById("dateOut").value || null;
+      const dateBack = document.getElementById("dateBack").value || null;
+
+      if (dateMode === "concrete") {
+        if (!dateOut) {
+          e.preventDefault();
+          alert("Elige una fecha de ida.");
+          return;
+        }
+        if (dateBack && dateBack < dateOut) {
+          e.preventDefault();
+          alert("La vuelta no puede ser anterior a la ida.");
+          return;
+        }
+      }
+
+      const datos = {
+        origin: originCode,
+        destinations: destinations.map(d => d.dest)
+      };
+
+      const datosCompletos = {
+        origin: originCode,
+        destinations,
+        dateMode,
+        dateOut,
+        dateBack,
+        flexibleText: document.getElementById("flexibleText").value.trim() || null,
+        budget: document.getElementById("budget").value ? Number(document.getElementById("budget").value) : null
+      };
+
+      e.preventDefault();
+      localStorage.setItem("busquedaVuelo", JSON.stringify(datosCompletos));
+
+      try {
+        console.log("DATOS EXACTOS ENVIADOS:", JSON.stringify(datos, null, 2));
+
+        const response = await fetch("http://127.0.0.1:8000/route", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(datos)
+        });
+
+        const resultado = await response.json();
+        console.log("RESPUESTA BACKEND:", resultado);
+        localStorage.setItem("resultadoBusqueda", JSON.stringify(resultado));
+        window.location.href = "./busqueda.html";
+      } catch (error) {
+        console.error("Error en la búsqueda:", error);
+        alert("Error al conectar con el servidor");
+      }
+     });
+  </script>
+</body>
+</html>

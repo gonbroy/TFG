@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<link rel="stylesheet" href="./styless.css">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Travel Planner</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/register.css">
+    <link rel="stylesheet" href="../css/footer.css"> 
+    <link rel="stylesheet" href="../css/styles.css"> 
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <h1>Registro</h1>
+    <h3>Es necesario rellenar todos los campos para poder registrarte</h3>
+    
+    <main class="wrap">
+      <section class="card auth-card">
+        <div class="auth-grid">
+
+          <!-- REGISTRO -->
+          <div class="auth-panel">
+            <h2 class="auth-title">REGISTRO</h2>
+
+            <form class="auth-form" id="registerForm">
+                <label class="auth-label">Nombre de usuario</label>
+                <input class="auth-input" type="text" id="regUsername" required>
+
+                <label class="auth-label">Email</label>
+                <input class="auth-input" type="email" id="regEmail" required>
+
+                <label class="auth-label">Contraseña</label>
+                <input class="auth-input" type="password" id="regPass" required>
+
+                <label class="auth-label">Repite contraseña</label>
+                <input class="auth-input" type="password" id="regPass2" required>
+
+                <button class="auth-btn" type="submit">Registrarse</button>
+            </form>
+          </div>
+
+          <div class="auth-divider"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+    <script src="../include.js"></script>
+
+</body>
+</html>

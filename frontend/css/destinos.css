@@ -1,0 +1,13 @@
+/* Sticky footer layout */
+html, body { height: 100%; }
+
+body.app{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* este main es el que “empuja” el footer al fondo */
+.app-main{
+  flex: 1;
+}

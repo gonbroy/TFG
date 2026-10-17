@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Smart Travel Planner</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/busqueda.css">
+    <link rel="stylesheet" href="../css/footer.css"> 
+    <link rel="stylesheet" href="../css/styles.css"> 
+</head>
+
+ <div id="header"></div>
+<body class="results-page">
+
+<style>/* Solo afecta a la página de resultados */
+.results-page .wrap{ max-width: 1300px; margin: 22px auto; padding: 0 18px; }
+
+/* Resumen */
+.results-page .summary{ padding: 18px; }
+.results-page .summary-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.results-page .summary-item{
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: linear-gradient(180deg, rgba(17,24,39,.02), rgba(17,24,39,0));
+}
+
+.results-page .kicker{
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+.results-page .strong{ font-weight: 800; }
+.results-page .muted{ color: #6b7280; font-size: 13px; }
+
+.results-page .chips{ display:flex; gap: 8px; flex-wrap: wrap; }
+.results-page .chip{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #fff;
+  font-weight: 700;
+}
+
+/* Resultados */
+.results-page .results-card{ overflow: hidden; }
+.results-page .results-head{
+  display:grid;
+  grid-template-columns: 1.1fr 1.7fr .6fr .9fr;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  color: #6b7280;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.results-page .results{ display:flex; flex-direction: column; }
+.results-page .result-row{
+  display:grid;
+  grid-template-columns: 1.1fr 1.7fr .6fr .9fr;
+  gap: 12px;
+  padding: 16px 18px;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.results-page .result-row:hover{ background: rgba(37,99,235,.03); }
+
+.results-page .right{ text-align:right; }
+.results-page .price{ font-size: 18px; font-weight: 900; }
+
+/* Ruta */
+.results-page .route{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.results-page .airport{
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #fff;
+}
+.results-page .arrow{ color:#6b7280; font-weight: 800; }
+.results-page .badge{
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(34,197,94,.12);
+  color: #166534;
+  border: 1px solid rgba(34,197,94,.25);
+}
+
+/* Botones */
+.results-page .actions{
+  display:flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.results-page .btn{
+  border: 1px solid rgba(0,0,0,0.10);
+  background: #fff;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  color: inherit;
+}
+.results-page .btn:hover{ box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+.results-page .btn-primary{
+  background: #2563eb;
+  border-color: transparent;
+  color: #fff;
+}
+.results-page .btn-primary:hover{ background: #1d4ed8; }
+.results-page .btn-ghost{ background: transparent; }
+
+/* Responsive */
+@media (max-width: 900px){
+  .results-page .summary-grid{ grid-template-columns: 1fr 1fr; }
+  .results-page .results-head{ display:none; }
+  .results-page .result-row{ grid-template-columns: 1fr; }
+  .results-page .right{ text-align:left; }
+  .results-page .actions{ justify-content:flex-start; }
+}
+</style>
+
+<main class="wrap">
+  <!-- <section class="card summary">
+    <div class="summary-grid">
+     <div class="summary-item">
+        <div class="kicker">Origen</div>
+        <div class="strong">Sevilla (SVQ)</div>
+        <div class="muted">Sevilla, Spain</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="kicker">Destinos</div>
+        <div class="chips">
+          <span class="chip">AMS</span>
+          <span class="chip">CDG</span>
+          <span class="chip">FCO</span>
+        </div>
+      </div>
+
+      <div class="summary-item">
+        <div class="kicker">Fecha</div>
+        <div class="muted">Ida: <span class="strong">2024-12-20</span></div>
+        <div class="muted">Vuelta: <span class="strong">2025-01-10</span></div>
+      </div>
+
+      <div class="summary-item">
+        <div class="kicker">Presupuesto máx.</div>
+        <div class="price">300€</div>
+        <div class="muted">Límite opcional</div>
+      </div>
+    
+    </div>
+  </section>-->
+  <section class="card summary">
+      <h2>Filtro de búsqueda</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="kicker">Origen</div>
+        <div class="strong" id="sumOrigin">—</div>
+        <div class="muted" id="sumOriginCity"> </div>
+      </div>
+
+      <div class="summary-item">
+        <div class="kicker">Destinos</div>
+        <div class="chips" id="sumDests"></div>
+        <div class="muted" id="sumDestsInfo"></div>
+      </div>
+
+      <div class="summary-item">
+        <div class="kicker">Fecha</div>
+        <div class="muted">Ida: <span class="strong" id="sumOut">—</span></div>
+        <div class="muted">Vuelta: <span class="strong" id="sumBack">—</span></div>
+      </div>
+
+      <div class="summary-item">
+        <div class="kicker">Presupuesto máx.</div>
+        <div class="price" id="sumBudget">—</div>
+        <div class="muted">Límite opcional</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card results-card">
+    <div class="results-head">
+      <div class="col-check"></div>
+      <div>Origen</div>
+      <div>Orden destinos</div>
+      <div class="right">Precio</div>
+      <div class="right">Acciones</div>
+    </div>
+
+    <div class="results" id="resultsContainer"></div>
+    <!--<div class="results">
+
+      Resultado 1 
+       
+      <article class="result-row" data-id="r1">
+
+        <div class="col-check">
+          <input type="checkbox" class="compare-check">
+        </div>
+
+        <div>
+          <div class="strong" id="resultOrigin">—</div>
+          <div class="muted" id="resultOriginCountry">—</div>
+        </div>
+
+        <div class="route" id="resultRoute"></div>
+
+        <div class="right">
+          <div class="price" id="resultPrice">—</div>
+          <div class="muted" id="resultNote">—</div>
+        </div>
+
+        <div class="right actions">
+          <a class="btn btn-ghost" href="detalles.html">Más detalles</a>
+           <button class="btn btn-primary js-open"
+                  id="resultDetailBtn"
+                  data-route=""
+                  data-price="">
+            Detalles
+          </button>
+          <a class="btn btn-primary" href="compra.html">Comprar</a>
+        </div>
+
+      </article>
+
+       Resultado 2 
+      <article class="result-row" data-id="r2">
+
+        <div class="col-check">
+          <input type="checkbox" class="compare-check">
+        </div>
+
+        <div>
+          <div class="strong">SVQ · Sevilla</div>
+          <div class="muted">Spain</div>
+        </div>
+
+        <div class="route">
+          <span class="airport">CDG</span><span class="arrow">→</span>
+          <span class="airport">FCO</span><span class="arrow">→</span>
+          <span class="airport">AMS</span>
+        </div>
+
+        <div class="right">
+          <div class="price">450€</div>
+          <div class="muted">+150€</div>
+        </div>
+
+        <div class="right actions">
+          <a class="btn btn-ghost" href="detalles.html">Más detalles</a>
+          <a class="btn" href="compra.html">Comprar</a>
+        </div>
+      </article>
+    </div>
+    */-->
+    <div class="compare-bar" id="compareBar">
+  <div>
+    <strong id="compareCount">0</strong> seleccionados
+  </div>
+
+  <div>
+    <button class="btn" id="clearCompare">Limpiar</button>
+    <button class="btn btn-primary" id="compareBtn" disabled>
+      Comparar
+    </button>
+  </div>
+</div>
+  </section>
+
+</main>
+<div id="debug"></div>
+
+<script src="../storage.js"></script>
+<script>
+  const b = getBusqueda();
+  const resultado = JSON.parse(localStorage.getItem("resultadoBusqueda"));
+
+  if (!b) {
+    document.getElementById("debug").textContent = "No hay datos guardados.";
+  } else {
+    document.getElementById("sumOrigin").textContent = b.origin || "—";
+    document.getElementById("sumOut").textContent = b.dateOut || "—";
+    document.getElementById("sumBack").textContent = b.dateBack || "—";
+    document.getElementById("sumBudget").textContent =
+      (b.budget != null) ? (b.budget + "€") : "—";
+
+    const destBox = document.getElementById("sumDests");
+    destBox.innerHTML = "";
+    (b.destinations || []).forEach(d => {
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.textContent = d.dest;
+      destBox.appendChild(chip);
+    });
+
+    document.getElementById("debug").textContent = "Datos cargados";
+    console.log("Leído:", b);
+    console.log("RESULTADO BACKEND:", resultado);
+
+    renderResults(resultado);
+  }
+
+function renderResults(resultado) {
+  const container = document.getElementById("resultsContainer");
+  container.innerHTML = "";
+
+  if (!resultado) {
+    container.innerHTML = `<div class="result-row"><div>No hay resultado del backend.</div></div>`;
+    return;
+  }
+
+  const resultados = Array.isArray(resultado.results) ? resultado.results : [resultado];
+
+  resultados.forEach((item, index) => {
+    const route = item.route || [];
+    const origin = route[0] || "—";
+    const destinos = route.slice(1);
+    const price = item.estimated_cost ?? item.total_cost ?? "—";
+    const note = item.note || `Opción ${index + 1}`;
+
+    const destinosHtml = destinos.map((code, i) => {
+      const arrow = i < destinos.length - 1 ? `<span class="arrow">→</span>` : "";
+      return `<span class="airport">${code}</span>${arrow}`;
+    }).join("");
+
+    const badgeHtml = index === 0
+      ? `<span class="badge">Más barato</span>`
+      : "";
+
+    const row = document.createElement("article");
+    row.className = "result-row";
+    row.dataset.id = `r${index + 1}`;
+
+    row.innerHTML = `
+      <div class="col-check">
+        <input type="checkbox" class="compare-check">
+      </div>
+
+      <div>
+        <div class="strong">${origin}</div>
+      </div>
+
+      <div class="route">
+        ${destinosHtml}
+        ${badgeHtml}
+      </div>
+
+      <div class="right">
+        <div class="price">${price}€</div>
+        <div class="muted">${note}</div>
+      </div>
+
+      <div class="right actions">
+        <a class="btn btn-ghost" href="detalles.html">Más detalles</a>
+        <button class="btn btn-primary js-open"
+                data-route="${route.join(" → ")}"
+                data-price="${price}€">
+          Detalles
+        </button>
+        <a class="btn btn-primary" href="compra.html">Comprar</a>
+      </div>
+    `;
+
+    container.appendChild(row);
+  });
+}
+</script>
+
+<script src="../include.js"></script>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">✕</span>
+
+    <h2>Detalles del vuelo</h2>
+    <div id="modalBody"></div>
+
+    <button class="btn btn-primary" id="closeModalBtn">Cerrar</button>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("modal");
+  const modalBody = document.getElementById("modalBody");
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".js-open");
+    if (btn){
+      const route = btn.dataset.route;
+      const price = btn.dataset.price;
+
+      modalBody.innerHTML = `
+        <p><strong>Ruta:</strong> ${route}</p>
+        <p><strong>Precio:</strong> ${price}</p>
+      `;
+
+      modal.classList.add("show");
+    }
+
+    if (e.target.id === "closeModal" || e.target.id === "closeModalBtn" || e.target === modal){
+      modal.classList.remove("show");
+    }
+  });
+</script>
+
+<script>
+const checks = document.querySelectorAll(".compare-check");
+const compareBtn = document.getElementById("compareBtn");
+const clearBtn = document.getElementById("clearCompare");
+const countEl = document.getElementById("compareCount");
+
+function updateCompare(){
+  const selected = [...checks].filter(c => c.checked);
+  countEl.textContent = selected.length;
+
+  document.querySelectorAll(".result-row").forEach(row=>{
+    row.classList.remove("selected");
+  });
+
+  selected.forEach(c=>{
+    c.closest(".result-row").classList.add("selected");
+  });
+
+  compareBtn.disabled = selected.length < 2;
+}
+
+checks.forEach(c => c.addEventListener("change", updateCompare));
+
+clearBtn.addEventListener("click", ()=>{
+  checks.forEach(c => c.checked = false);
+  updateCompare();
+});
+
+compareBtn.addEventListener("click", ()=>{
+  const ids = [...checks]
+    .filter(c=>c.checked)
+    .map(c=>c.closest(".result-row").dataset.id);
+
+  alert("Comparando: " + ids.join(", "));
+});
+</script>
+
+<div id="footer"></div>
+</body>
+</html>
