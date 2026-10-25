@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 
 import backend.app.models as models
 
-
 def get_cheapest_flight(db: Session, origin_code: str, destination_code: str):
     flights = db.query(models.Flight).all()
 

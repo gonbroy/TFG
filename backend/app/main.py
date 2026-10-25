@@ -8,6 +8,10 @@ from backend.app.algorithms.route_opt import compute_route
 from backend.app.db import Base, engine, get_db
 import backend.app.models as models
 
+from backend.app.config_logs import setup_logging
+
+logger = setup_logging()
+
 app = FastAPI()
 
 # Crear tablas en el arranque
@@ -54,8 +58,30 @@ def root():
 
 @app.post("/route")
 def route(req: RouteRequest, db: Session = Depends(get_db)):
-    return compute_route(req.origin, req.destinations, db)
+    logger.info(
+        "Búsqueda de ruta | origen=%s | destinos=%s",
+        req.origin,
+        req.destinations,
+    )
 
+    try:
+        result = compute_route(req.origin, req.destinations, db)
+
+        logger.info(
+            "Cálculo de ruta finalizado | origen=%s | destinos=%s",
+            req.origin,
+            req.destinations,
+        )
+
+        return result
+
+    except Exception:
+        logger.exception(
+            "Error al calcular la ruta | origen=%s | destinos=%s",
+            req.origin,
+            req.destinations,
+        )
+        raise
 
 # -------- AEROPUERTOS --------
 

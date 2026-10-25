@@ -19,6 +19,9 @@ dist/
 # Logs
 *.log
 
+# Archivos de logs generados
+logs/
+
 # =========================
 # Variables de entorno
 # =========================
